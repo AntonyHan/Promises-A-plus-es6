@@ -50,8 +50,8 @@ class MyPromise {
     }
   }
   /**
-   * @param {value} onFulfilled //值的穿透，默认值往后传
-   * @param {reason} onRejected //默认把失败原因往后抛
+   * @param {Function} onFulfilled 值的穿透，默认值往后传
+   * @param {Function} onRejected 默认把失败原因往后抛
    */
   then(onFulfilled = value => value, onRejected = reason => {throw reason}) {
     //缓存this,定义promise2
@@ -200,7 +200,7 @@ static all(promises) {
       }
     })
   }
-  //promise all方法，只要有一个失败就失败了。
+  //promise race方法，看resolve和reject哪个先返回，就取哪个值，成功就取成功的value，失败就取失败的reason。
   static race(promises) {
     return new MyPromise((resolve, reject) => {
       for (let i = 0, l = promises.length; i < l; i++) {
